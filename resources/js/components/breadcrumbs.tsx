@@ -19,25 +19,32 @@ export function Breadcrumbs({
         <>
             {breadcrumbs.length > 0 && (
                 <Breadcrumb>
-                    <BreadcrumbList>
+                    <BreadcrumbList className="font-mono-ibm text-[0.7rem]">
                         {breadcrumbs.map((item, index) => {
                             const isLast = index === breadcrumbs.length - 1;
                             return (
                                 <Fragment key={index}>
                                     <BreadcrumbItem>
                                         {isLast ? (
-                                            <BreadcrumbPage>
+                                            <BreadcrumbPage className="text-portfolio-text">
                                                 {item.title}
                                             </BreadcrumbPage>
                                         ) : (
-                                            <BreadcrumbLink asChild>
+                                            <BreadcrumbLink
+                                                asChild
+                                                className="text-portfolio-text-secondary transition-colors duration-200 hover:text-portfolio-accent"
+                                            >
                                                 <Link href={item.href}>
                                                     {item.title}
                                                 </Link>
                                             </BreadcrumbLink>
                                         )}
                                     </BreadcrumbItem>
-                                    {!isLast && <BreadcrumbSeparator />}
+                                    {!isLast && (
+                                        <BreadcrumbSeparator className="text-portfolio-text-secondary">
+                                            /
+                                        </BreadcrumbSeparator>
+                                    )}
                                 </Fragment>
                             );
                         })}

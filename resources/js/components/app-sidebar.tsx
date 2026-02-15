@@ -1,6 +1,5 @@
 import { Link } from '@inertiajs/react';
-import { BookOpen, Folder, LayoutGrid } from 'lucide-react';
-import { NavFooter } from '@/components/nav-footer';
+import { Cpu, FileCode, FileText, FolderKanban, LayoutGrid, Settings, Tag } from 'lucide-react';
 import { NavMain } from '@/components/nav-main';
 import { NavUser } from '@/components/nav-user';
 import {
@@ -12,28 +11,51 @@ import {
     SidebarMenuButton,
     SidebarMenuItem,
 } from '@/components/ui/sidebar';
-import { dashboard } from '@/routes';
+import { dashboard } from '@/routes/admin';
+import { index as postsIndex } from '@/routes/admin/posts';
+import { edit as pagesEdit } from '@/routes/admin/pages';
+import { index as projectsIndex } from '@/routes/admin/projects';
+import { index as settingsIndex } from '@/routes/admin/settings';
+import { index as tagsIndex } from '@/routes/admin/tags';
+import { index as technologiesIndex } from '@/routes/admin/technologies';
 import type { NavItem } from '@/types';
 import AppLogo from './app-logo';
 
 const mainNavItems: NavItem[] = [
     {
         title: 'Dashboard',
-        href: dashboard(),
+        href: dashboard.url(),
         icon: LayoutGrid,
     },
-];
-
-const footerNavItems: NavItem[] = [
     {
-        title: 'Repository',
-        href: 'https://github.com/laravel/react-starter-kit',
-        icon: Folder,
+        title: 'Projects',
+        href: projectsIndex.url(),
+        icon: FolderKanban,
     },
     {
-        title: 'Documentation',
-        href: 'https://laravel.com/docs/starter-kits#react',
-        icon: BookOpen,
+        title: 'Posts',
+        href: postsIndex.url(),
+        icon: FileText,
+    },
+    {
+        title: 'Tags',
+        href: tagsIndex.url(),
+        icon: Tag,
+    },
+    {
+        title: 'Technologies',
+        href: technologiesIndex.url(),
+        icon: Cpu,
+    },
+    {
+        title: 'Pages',
+        href: pagesEdit.url('about'),
+        icon: FileCode,
+    },
+    {
+        title: 'Settings',
+        href: settingsIndex.url(),
+        icon: Settings,
     },
 ];
 
@@ -44,7 +66,7 @@ export function AppSidebar() {
                 <SidebarMenu>
                     <SidebarMenuItem>
                         <SidebarMenuButton size="lg" asChild>
-                            <Link href={dashboard()} prefetch>
+                            <Link href={dashboard.url()} prefetch>
                                 <AppLogo />
                             </Link>
                         </SidebarMenuButton>
@@ -57,7 +79,6 @@ export function AppSidebar() {
             </SidebarContent>
 
             <SidebarFooter>
-                <NavFooter items={footerNavItems} className="mt-auto" />
                 <NavUser />
             </SidebarFooter>
         </Sidebar>
