@@ -1,0 +1,24 @@
+<?php
+
+namespace App\Http\Requests\Admin;
+
+use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
+
+class UpdateTechnologyRequest extends FormRequest
+{
+    public function authorize(): bool
+    {
+        return true;
+    }
+
+    /** @return array<string, mixed> */
+    public function rules(): array
+    {
+        return [
+            'name' => ['required', 'string', 'max:100'],
+            'slug' => ['nullable', 'string', Rule::unique('technologies', 'slug')->ignore($this->route('technology'))],
+            'category' => ['nullable', 'string', 'max:50'],
+        ];
+    }
+}
