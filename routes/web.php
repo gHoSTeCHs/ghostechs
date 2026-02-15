@@ -2,13 +2,14 @@
 
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
-use Laravel\Fortify\Features;
 
 Route::get('/', function () {
-    return Inertia::render('welcome', [
-        'canRegister' => Features::enabled(Features::registration()),
-    ]);
+    return Inertia::render('welcome');
 })->name('home');
+
+Route::get('/projects/{slug}', function (string $slug) {
+    return Inertia::render('projects/show');
+})->name('projects.show');
 
 Route::get('dashboard', function () {
     return Inertia::render('dashboard');
