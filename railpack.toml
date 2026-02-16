@@ -5,6 +5,9 @@ version = "8.3"
 builder = "railpack"
 buildCommand = "npm run build"
 
+[build.env]
+COMPOSER_ALLOW_SUPERUSER = "1"
+
 [deploy]
 restartPolicyType = "on_failure"
 restartPolicyMaxRetries = 3
