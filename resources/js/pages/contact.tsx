@@ -1,5 +1,5 @@
-import { Head } from '@inertiajs/react';
 import { useEffect, useState } from 'react';
+import { Meta } from '@/components/seo/meta';
 import { useInView } from '@/hooks/use-in-view';
 import PortfolioLayout from '@/layouts/portfolio-layout';
 import type { ContactPageProps } from '@/types/pages';
@@ -11,7 +11,7 @@ type ContactLinkItem = {
 };
 
 function ContactLink({ link, index: i }: { link: ContactLinkItem; index: number }) {
-    const { ref, isInView } = useInView();
+    const { ref, isInView } = useInView<HTMLAnchorElement>();
 
     return (
         <a
@@ -66,7 +66,7 @@ export default function Contact({ settings }: ContactPageProps) {
 
     return (
         <PortfolioLayout>
-            <Head title="Contact — Portfolio" />
+            <Meta title="Contact" description="Get in touch — let's connect and build something together." />
 
             <section className="pb-12 pt-24">
                 <div

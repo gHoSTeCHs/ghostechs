@@ -1,8 +1,8 @@
-import { Head } from '@inertiajs/react';
 import { useEffect, useState } from 'react';
 import { BackLink } from '@/components/portfolio/back-link';
 import { ProjectNav } from '@/components/portfolio/project-nav';
 import { StatusBadge } from '@/components/portfolio/status-badge';
+import { Meta } from '@/components/seo/meta';
 import { useInView } from '@/hooks/use-in-view';
 import PortfolioLayout from '@/layouts/portfolio-layout';
 import { home } from '@/routes';
@@ -51,7 +51,7 @@ export default function ProjectShow({ project, prevProject, nextProject }: Proje
 
     return (
         <PortfolioLayout>
-            <Head title={`${project.title} — Portfolio`} />
+            <Meta title={project.title} description={project.tagline} />
 
             <div className="pt-12">
                 <BackLink href={home.url()} label="Back to projects" />

@@ -24,15 +24,12 @@ class PageController extends Controller
 
         return Inertia::render('about', [
             'page' => $page,
-            'settings' => $this->settingService->getPublicSettings(),
         ]);
     }
 
     public function contact(): Response
     {
-        return Inertia::render('contact', [
-            'settings' => $this->settingService->getPublicSettings(),
-        ]);
+        return Inertia::render('contact');
     }
 
     public function resume(): Response
@@ -40,7 +37,6 @@ class PageController extends Controller
         $settings = $this->settingService->getPublicSettings();
 
         return Inertia::render('resume', [
-            'settings' => $settings,
             'resumeUrl' => $settings['resume_url'] ?? null,
         ]);
     }

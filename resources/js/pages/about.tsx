@@ -1,5 +1,5 @@
-import { Head } from '@inertiajs/react';
 import { useEffect, useState } from 'react';
+import { Meta } from '@/components/seo/meta';
 import PortfolioLayout from '@/layouts/portfolio-layout';
 import type { AboutPageProps } from '@/types/pages';
 
@@ -13,7 +13,7 @@ export default function About({ page }: AboutPageProps) {
 
     return (
         <PortfolioLayout>
-            <Head title={`${page.title} — Portfolio`} />
+            <Meta title={page.title} />
 
             <section
                 className="pb-24 pt-24"

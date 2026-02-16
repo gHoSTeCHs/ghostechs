@@ -1,7 +1,7 @@
 import { Head, router } from '@inertiajs/react';
 import { useForm } from '@inertiajs/react';
 import { ChevronDown } from 'lucide-react';
-import type { ReactNode } from 'react';
+import type { ReactElement } from 'react';
 import { useState } from 'react';
 import { MarkdownEditor } from '@/components/admin/markdown-editor';
 import { Input } from '@/components/ui/input';
@@ -124,8 +124,8 @@ export default function AdminPageForm({ page }: AdminPageEditProps) {
     );
 }
 
-AdminPageForm.layout = (page: ReactNode) => {
-    const { page: pageData } = page.props as unknown as AdminPageEditProps;
+AdminPageForm.layout = (page: ReactElement<{ page: AdminPageEditProps['page'] }>) => {
+    const { page: pageData } = page.props;
     const breadcrumbs = [
         { title: 'Dashboard', href: dashboard.url() },
         { title: pageData.title, href: edit.url(pageData.slug) },

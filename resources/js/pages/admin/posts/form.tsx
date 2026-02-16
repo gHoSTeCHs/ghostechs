@@ -1,7 +1,7 @@
 import { Head, Link, router } from '@inertiajs/react';
 import { useForm } from '@inertiajs/react';
 import { ChevronDown } from 'lucide-react';
-import type { ReactNode } from 'react';
+import type { ReactElement } from 'react';
 import { useState } from 'react';
 import { ConfirmDialog } from '@/components/admin/confirm-dialog';
 import { MarkdownEditor } from '@/components/admin/markdown-editor';
@@ -289,8 +289,8 @@ export default function AdminPostForm({ post, tags }: AdminPostFormProps) {
     );
 }
 
-AdminPostForm.layout = (page: ReactNode) => {
-    const { post } = page.props as unknown as AdminPostFormProps;
+AdminPostForm.layout = (page: ReactElement<AdminPostFormProps>) => {
+    const { post } = page.props;
     const breadcrumbs = [
         { title: 'Dashboard', href: dashboard.url() },
         { title: 'Posts', href: index.url() },

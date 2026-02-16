@@ -1,6 +1,6 @@
 import { Head, Link, router } from '@inertiajs/react';
 import { ArrowLeft, GripVertical, Plus } from 'lucide-react';
-import type { ReactNode } from 'react';
+import type { ReactElement } from 'react';
 import { useState } from 'react';
 import {
     DndContext,
@@ -284,8 +284,8 @@ export default function AdminProjectSectionsIndex({ project }: AdminProjectSecti
     );
 }
 
-AdminProjectSectionsIndex.layout = (page: ReactNode) => {
-    const { project } = page.props as unknown as AdminProjectSectionsProps;
+AdminProjectSectionsIndex.layout = (page: ReactElement<AdminProjectSectionsProps>) => {
+    const { project } = page.props;
     const breadcrumbs = [
         { title: 'Dashboard', href: dashboard.url() },
         { title: 'Projects', href: projectsIndex.url() },

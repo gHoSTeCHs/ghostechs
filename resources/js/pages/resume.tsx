@@ -1,5 +1,5 @@
-import { Head } from '@inertiajs/react';
 import { useEffect, useState } from 'react';
+import { Meta } from '@/components/seo/meta';
 import PortfolioLayout from '@/layouts/portfolio-layout';
 import type { ResumePageProps } from '@/types/pages';
 
@@ -13,7 +13,7 @@ export default function Resume({ resumeUrl }: ResumePageProps) {
 
     return (
         <PortfolioLayout>
-            <Head title="Resume — Portfolio" />
+            <Meta title="Resume" />
 
             <section
                 className="pb-24 pt-24"

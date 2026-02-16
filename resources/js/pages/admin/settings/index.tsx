@@ -31,7 +31,7 @@ const SETTING_FIELDS: {
 ];
 
 export default function AdminSettingsIndex({ settings }: AdminSettingsProps) {
-    const { data, setData, processing } = useForm(
+    const { data, setData, processing } = useForm<Record<string, string>>(
         Object.fromEntries(
             SETTING_FIELDS.map((field) => [field.key, settings[field.key] ?? '']),
         ),
@@ -63,16 +63,16 @@ export default function AdminSettingsIndex({ settings }: AdminSettingsProps) {
                         </label>
                         {field.type === 'textarea' ? (
                             <Textarea
-                                value={(data as Record<string, string>)[field.key] ?? ''}
-                                onChange={(e) => setData(field.key as keyof typeof data, e.target.value)}
+                                value={data[field.key] ?? ''}
+                                onChange={(e) => setData(field.key, e.target.value)}
                                 rows={3}
                                 placeholder={field.placeholder}
                                 className="border-portfolio-border bg-portfolio-bg font-mono-ibm text-[0.85rem] text-portfolio-text resize-y"
                             />
                         ) : (
                             <Input
-                                value={(data as Record<string, string>)[field.key] ?? ''}
-                                onChange={(e) => setData(field.key as keyof typeof data, e.target.value)}
+                                value={data[field.key] ?? ''}
+                                onChange={(e) => setData(field.key, e.target.value)}
                                 placeholder={field.placeholder}
                                 className="border-portfolio-border bg-portfolio-bg font-mono-ibm text-[0.85rem] text-portfolio-text"
                             />

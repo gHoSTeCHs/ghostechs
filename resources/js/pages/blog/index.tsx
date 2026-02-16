@@ -1,5 +1,6 @@
-import { Head, Link, router } from '@inertiajs/react';
+import { Link, router } from '@inertiajs/react';
 import { useEffect, useState } from 'react';
+import { Meta } from '@/components/seo/meta';
 import { useInView } from '@/hooks/use-in-view';
 import PortfolioLayout from '@/layouts/portfolio-layout';
 import { index, show } from '@/routes/blog';
@@ -90,7 +91,7 @@ export default function BlogIndex({ posts, tags, activeTag }: BlogIndexPageProps
 
     return (
         <PortfolioLayout>
-            <Head title="Blog — Portfolio" />
+            <Meta title="Blog" description="Thoughts on web development, architecture, and building products." />
 
             <section className="pb-12 pt-24">
                 <div

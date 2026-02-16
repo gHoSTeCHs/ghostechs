@@ -6,7 +6,6 @@ use App\Http\Controllers\Controller;
 use App\Models\Project;
 use App\Services\MarkdownService;
 use App\Services\ProjectService;
-use App\Services\SiteSettingService;
 use Inertia\Inertia;
 use Inertia\Response;
 
@@ -15,7 +14,6 @@ class ProjectController extends Controller
     public function __construct(
         private ProjectService $projectService,
         private MarkdownService $markdownService,
-        private SiteSettingService $settingService,
     ) {}
 
     public function show(string $slug): Response
@@ -66,7 +64,6 @@ class ProjectController extends Controller
             'project' => $project,
             'prevProject' => $prevProject,
             'nextProject' => $nextProject,
-            'settings' => $this->settingService->getPublicSettings(),
         ]);
     }
 }

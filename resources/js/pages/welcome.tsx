@@ -1,10 +1,10 @@
-import { Head } from '@inertiajs/react';
+import { Link } from '@inertiajs/react';
 import { useEffect, useState } from 'react';
 import { ProjectCard } from '@/components/portfolio/project-card';
 import { SocialLink } from '@/components/portfolio/social-link';
+import { Meta } from '@/components/seo/meta';
 import PortfolioLayout from '@/layouts/portfolio-layout';
 import { show as blogShow } from '@/routes/blog';
-import { Link } from '@inertiajs/react';
 import type { HomePageProps } from '@/types/pages';
 
 export default function Welcome({ projects, featuredPosts, settings }: HomePageProps) {
@@ -31,7 +31,7 @@ export default function Welcome({ projects, featuredPosts, settings }: HomePageP
 
     return (
         <PortfolioLayout>
-            <Head title="Somadina — Full-Stack Developer" />
+            <Meta title="Full-Stack Developer" description="Building robust, scalable web applications with Laravel, React, and TypeScript." />
 
             <section className="pb-16 pt-24">
                 <div

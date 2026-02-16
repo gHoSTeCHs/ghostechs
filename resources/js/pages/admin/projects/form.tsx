@@ -1,7 +1,7 @@
 import { Head, Link, router } from '@inertiajs/react';
 import { useForm } from '@inertiajs/react';
 import { ChevronDown } from 'lucide-react';
-import type { ReactNode } from 'react';
+import type { ReactElement } from 'react';
 import { useState } from 'react';
 import { ConfirmDialog } from '@/components/admin/confirm-dialog';
 import { SlugInput } from '@/components/admin/slug-input';
@@ -338,8 +338,8 @@ export default function AdminProjectForm({ project, technologies }: AdminProject
     );
 }
 
-AdminProjectForm.layout = (page: ReactNode) => {
-    const { project } = page.props as unknown as AdminProjectFormProps;
+AdminProjectForm.layout = (page: ReactElement<AdminProjectFormProps>) => {
+    const { project } = page.props;
     const breadcrumbs = [
         { title: 'Dashboard', href: dashboard.url() },
         { title: 'Projects', href: index.url() },

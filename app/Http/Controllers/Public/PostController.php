@@ -5,7 +5,6 @@ namespace App\Http\Controllers\Public;
 use App\Http\Controllers\Controller;
 use App\Services\MarkdownService;
 use App\Services\PostService;
-use App\Services\SiteSettingService;
 use App\Services\TagService;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
@@ -17,7 +16,6 @@ class PostController extends Controller
         private PostService $postService,
         private TagService $tagService,
         private MarkdownService $markdownService,
-        private SiteSettingService $settingService,
     ) {}
 
     public function index(Request $request): Response
@@ -35,7 +33,6 @@ class PostController extends Controller
             'posts' => $posts,
             'tags' => $this->tagService->getAll(),
             'activeTag' => $tagSlug,
-            'settings' => $this->settingService->getPublicSettings(),
         ]);
     }
 
@@ -48,7 +45,6 @@ class PostController extends Controller
         return Inertia::render('blog/show', [
             'post' => $post,
             'relatedPosts' => $relatedPosts,
-            'settings' => $this->settingService->getPublicSettings(),
         ]);
     }
 }

@@ -1,6 +1,7 @@
-import { Head, Link } from '@inertiajs/react';
+import { Link } from '@inertiajs/react';
 import { useEffect, useState } from 'react';
 import { BackLink } from '@/components/portfolio/back-link';
+import { Meta } from '@/components/seo/meta';
 import { useInView } from '@/hooks/use-in-view';
 import PortfolioLayout from '@/layouts/portfolio-layout';
 import { index, show } from '@/routes/blog';
@@ -52,7 +53,7 @@ export default function BlogShow({ post, relatedPosts }: BlogPostPageProps) {
 
     return (
         <PortfolioLayout>
-            <Head title={`${post.title} — Blog`} />
+            <Meta title={post.title} description={post.excerpt ?? undefined} ogType="article" />
 
             <div className="pt-12">
                 <BackLink href={index.url()} label="Back to blog" />

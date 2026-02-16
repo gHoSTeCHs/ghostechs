@@ -1,6 +1,6 @@
 import { Head, Link, router } from '@inertiajs/react';
 import { useForm } from '@inertiajs/react';
-import type { ReactNode } from 'react';
+import type { ReactElement } from 'react';
 import { MarkdownEditor } from '@/components/admin/markdown-editor';
 import { Input } from '@/components/ui/input';
 import { Switch } from '@/components/ui/switch';
@@ -157,8 +157,8 @@ export default function AdminProjectSectionForm({ project, section }: AdminProje
     );
 }
 
-AdminProjectSectionForm.layout = (page: ReactNode) => {
-    const { project, section } = page.props as unknown as AdminProjectSectionFormProps;
+AdminProjectSectionForm.layout = (page: ReactElement<AdminProjectSectionFormProps>) => {
+    const { project, section } = page.props;
     const breadcrumbs = [
         { title: 'Dashboard', href: dashboard.url() },
         { title: 'Projects', href: projectsIndex.url() },
