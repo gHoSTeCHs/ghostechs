@@ -24,6 +24,9 @@ class ProjectController extends Controller
             $section->body_html = $this->markdownService->toHtml($section->body);
         });
 
+        $project->setRelation('sections', $project->visibleSections);
+        $project->unsetRelation('visibleSections');
+
         $project->thumbnail_url = $project->getFirstMediaUrl('thumbnail') ?: null;
         $project->screenshots = $project->getMedia('screenshots')->map(fn ($media) => [
             'id' => $media->id,

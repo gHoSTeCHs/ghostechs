@@ -117,7 +117,6 @@ export default function ProjectShow({ project, prevProject, nextProject }: Proje
             <section className="pb-16">
                 {project.sections
                     ?.sort((a, b) => a.sort_order - b.sort_order)
-                    .filter((s) => s.is_visible)
                     .map((section, i) => (
                         <Section
                             key={section.id}

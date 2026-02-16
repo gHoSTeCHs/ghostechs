@@ -12,13 +12,21 @@ class TechnologySeeder extends Seeder
     {
         $technologies = [
             ['name' => 'Laravel', 'category' => 'Backend'],
-            ['name' => 'React', 'category' => 'Frontend'],
-            ['name' => 'TypeScript', 'category' => 'Language'],
-            ['name' => 'Tailwind CSS', 'category' => 'Frontend'],
-            ['name' => 'PostgreSQL', 'category' => 'Database'],
+            ['name' => 'Inertia.js', 'category' => 'Backend'],
             ['name' => 'PHP', 'category' => 'Language'],
-            ['name' => 'Android', 'category' => 'Mobile'],
+            ['name' => 'TypeScript', 'category' => 'Language'],
             ['name' => 'Kotlin', 'category' => 'Language'],
+            ['name' => 'React', 'category' => 'Frontend'],
+            ['name' => 'Tailwind CSS', 'category' => 'Frontend'],
+            ['name' => 'Framer Motion', 'category' => 'Frontend'],
+            ['name' => 'GSAP', 'category' => 'Frontend'],
+            ['name' => 'Alpine.js', 'category' => 'Frontend'],
+            ['name' => 'PostgreSQL', 'category' => 'Database'],
+            ['name' => 'Redis', 'category' => 'Database'],
+            ['name' => 'Meilisearch', 'category' => 'Database'],
+            ['name' => 'Cloudflare R2', 'category' => 'Infrastructure'],
+            ['name' => 'Nginx', 'category' => 'Infrastructure'],
+            ['name' => 'Android', 'category' => 'Mobile'],
         ];
 
         foreach ($technologies as $tech) {
