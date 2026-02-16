@@ -1,4 +1,4 @@
-import type { ProjectStatus } from '@/types/portfolio';
+import type { ProjectStatus } from '@/types/models';
 
 const STATUS_LABELS: Record<ProjectStatus, string> = {
     production: 'Production',

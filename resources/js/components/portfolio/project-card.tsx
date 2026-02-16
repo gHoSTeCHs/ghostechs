@@ -1,10 +1,20 @@
 import { useState } from 'react';
+import { Link } from '@inertiajs/react';
 import { useInView } from '@/hooks/use-in-view';
-import type { Project } from '@/types/portfolio';
+import { show } from '@/routes/projects';
+import type { Project } from '@/types/models';
 
 type ProjectCardProps = {
     project: Project;
     index: number;
+};
+
+const STATUS_LABELS: Record<string, string> = {
+    production: 'Production',
+    in_development: 'In Development',
+    released: 'Released',
+    research: 'Research',
+    archived: 'Archived',
 };
 
 export function ProjectCard({ project, index }: ProjectCardProps) {
@@ -12,11 +22,12 @@ export function ProjectCard({ project, index }: ProjectCardProps) {
     const [hovered, setHovered] = useState(false);
 
     return (
-        <div
+        <Link
+            href={show.url(project.slug)}
             ref={ref}
             onMouseEnter={() => setHovered(true)}
             onMouseLeave={() => setHovered(false)}
-            className="cursor-default border-b border-border py-10"
+            className="block border-b border-border py-10"
             style={{
                 opacity: isInView ? 1 : 0,
                 transform: isInView ? 'translateY(0)' : 'translateY(40px)',
@@ -35,10 +46,10 @@ export function ProjectCard({ project, index }: ProjectCardProps) {
                                 'transform 0.4s cubic-bezier(0.16, 1, 0.3, 1)',
                         }}
                     >
-                        {project.name}
+                        {project.title}
                     </h3>
                     <span className="font-mono-ibm text-[0.7rem] uppercase tracking-[0.1em] text-primary">
-                        {project.tag}
+                        {STATUS_LABELS[project.status] ?? project.status}
                     </span>
                 </div>
                 <div
@@ -48,7 +59,7 @@ export function ProjectCard({ project, index }: ProjectCardProps) {
             </div>
 
             <p className="mt-3 max-w-[640px] font-mono-ibm text-[0.85rem] leading-[1.7] text-muted-foreground">
-                {project.description}
+                {project.tagline}
             </p>
 
             <div
@@ -60,15 +71,15 @@ export function ProjectCard({ project, index }: ProjectCardProps) {
                         'all 0.5s cubic-bezier(0.16, 1, 0.3, 1)',
                 }}
             >
-                {project.stack.map((tech) => (
+                {project.technologies?.map((tech) => (
                     <span
-                        key={tech}
+                        key={tech.id}
                         className="rounded-sm border border-border px-[0.6rem] py-1 font-mono-ibm text-[0.65rem] tracking-[0.05em] text-muted-foreground"
                     >
-                        {tech}
+                        {tech.name}
                     </span>
                 ))}
             </div>
-        </div>
+        </Link>
     );
 }

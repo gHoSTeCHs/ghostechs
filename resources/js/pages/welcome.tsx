@@ -3,66 +3,31 @@ import { useEffect, useState } from 'react';
 import { ProjectCard } from '@/components/portfolio/project-card';
 import { SocialLink } from '@/components/portfolio/social-link';
 import PortfolioLayout from '@/layouts/portfolio-layout';
-import type { Project, SocialLink as SocialLinkType } from '@/types/portfolio';
+import { show as blogShow } from '@/routes/blog';
+import { Link } from '@inertiajs/react';
+import type { HomePageProps } from '@/types/pages';
 
-const PROJECTS: Project[] = [
-    {
-        name: 'ShelfWiser',
-        tag: 'SaaS · Production',
-        description:
-            'Multi-tenant inventory management platform with batch/expiry tracking, multi-location inventory, and role-based access control.',
-        stack: ['Laravel', 'React', 'TypeScript', 'PostgreSQL', 'Tailwind CSS'],
-    },
-    {
-        name: 'TaxPadi',
-        tag: 'Fintech · In Development',
-        description:
-            'Nigerian tax compliance platform with receipt parsing, mini-POS integration, and automatic tax calculations.',
-        stack: ['Laravel', 'React', 'TypeScript', 'Tailwind CSS'],
-    },
-    {
-        name: 'BatchDeliver',
-        tag: 'Logistics · In Development',
-        description:
-            'Delivery-as-a-service platform with zone-aware batch optimization designed for Nigerian markets.',
-        stack: ['Laravel', 'React', 'TypeScript', 'PostgreSQL'],
-    },
-    {
-        name: 'ConceptFlow',
-        tag: 'EdTech · In Development',
-        description:
-            'Interactive educational platform for programming concepts with visual learning and content authoring systems.',
-        stack: ['React', 'TypeScript', 'Tailwind CSS'],
-    },
-    {
-        name: 'MockPrep',
-        tag: 'Open Source',
-        description:
-            'Interview preparation platform combining DSA practice with AI-powered mock interviews.',
-        stack: ['Laravel', 'React', 'TypeScript'],
-    },
-    {
-        name: 'VeriVote',
-        tag: 'Security · Research',
-        description:
-            'Election security system exploring Android security development and cross-platform verification mechanisms.',
-        stack: ['Android', 'Kotlin', 'Security'],
-    },
-];
-
-const SOCIAL_LINKS: SocialLinkType[] = [
-    { label: 'GitHub', href: 'https://github.com', icon: 'github' },
-    { label: 'LinkedIn', href: 'https://linkedin.com', icon: 'linkedin' },
-    { label: 'Email', href: 'mailto:hello@example.com', icon: 'email' },
-];
-
-export default function Welcome() {
+export default function Welcome({ projects, featuredPosts, settings }: HomePageProps) {
     const [heroVisible, setHeroVisible] = useState(false);
 
     useEffect(() => {
         const timer = setTimeout(() => setHeroVisible(true), 100);
         return () => clearTimeout(timer);
     }, []);
+
+    const socialLinks: { label: string; href: string }[] = [];
+    if (settings.github_url) {
+        socialLinks.push({ label: 'GitHub', href: settings.github_url });
+    }
+    if (settings.linkedin_url) {
+        socialLinks.push({ label: 'LinkedIn', href: settings.linkedin_url });
+    }
+    if (settings.email) {
+        socialLinks.push({ label: 'Email', href: `mailto:${settings.email}` });
+    }
+    if (settings.twitter_url) {
+        socialLinks.push({ label: 'X / Twitter', href: settings.twitter_url });
+    }
 
     return (
         <PortfolioLayout>
@@ -86,9 +51,8 @@ export default function Welcome() {
                         Somadina
                     </h1>
                     <p className="max-w-[500px] font-mono-ibm text-[0.85rem] leading-[1.8] text-muted-foreground">
-                        Building robust, scalable web applications with Laravel,
-                        React, and TypeScript. Focused on solving real problems
-                        across fintech, logistics, and education.
+                        {settings.hero_text ??
+                            'Building robust, scalable web applications with Laravel, React, and TypeScript. Focused on solving real problems across fintech, logistics, and education.'}
                     </p>
                 </div>
 
@@ -103,8 +67,8 @@ export default function Welcome() {
                             'all 1s cubic-bezier(0.16, 1, 0.3, 1) 0.3s',
                     }}
                 >
-                    {SOCIAL_LINKS.map((link) => (
-                        <SocialLink key={link.label} link={link} />
+                    {socialLinks.map((link) => (
+                        <SocialLink key={link.label} label={link.label} href={link.href} />
                     ))}
                 </div>
             </section>
@@ -113,14 +77,56 @@ export default function Welcome() {
                 <p className="mb-8 font-mono-ibm text-[0.7rem] uppercase tracking-[0.2em] text-muted-foreground">
                     Selected Projects
                 </p>
-                {PROJECTS.map((project, i) => (
+                {projects.map((project, i) => (
                     <ProjectCard
-                        key={project.name}
+                        key={project.id}
                         project={project}
                         index={i}
                     />
                 ))}
             </section>
+
+            {featuredPosts.length > 0 && (
+                <section className="pb-24 pt-8">
+                    <p className="mb-8 font-mono-ibm text-[0.7rem] uppercase tracking-[0.2em] text-muted-foreground">
+                        Recent Writing
+                    </p>
+                    <div className="space-y-8">
+                        {featuredPosts.map((post) => (
+                            <Link
+                                key={post.id}
+                                href={blogShow.url(post.slug)}
+                                className="group block border-b border-border pb-8"
+                            >
+                                <h3 className="font-mono-space text-lg font-bold tracking-tight text-foreground transition-colors duration-300 group-hover:text-primary">
+                                    {post.title}
+                                </h3>
+                                {post.excerpt && (
+                                    <p className="mt-2 max-w-[640px] font-mono-ibm text-[0.85rem] leading-[1.7] text-muted-foreground">
+                                        {post.excerpt}
+                                    </p>
+                                )}
+                                <div className="mt-3 flex items-center gap-4">
+                                    {post.published_at && (
+                                        <span className="font-mono-ibm text-[0.65rem] uppercase tracking-[0.1em] text-muted-foreground">
+                                            {new Date(post.published_at).toLocaleDateString('en-US', {
+                                                year: 'numeric',
+                                                month: 'short',
+                                                day: 'numeric',
+                                            })}
+                                        </span>
+                                    )}
+                                    {post.reading_time_minutes && (
+                                        <span className="font-mono-ibm text-[0.65rem] uppercase tracking-[0.1em] text-muted-foreground">
+                                            {post.reading_time_minutes} min read
+                                        </span>
+                                    )}
+                                </div>
+                            </Link>
+                        ))}
+                    </div>
+                </section>
+            )}
         </PortfolioLayout>
     );
 }

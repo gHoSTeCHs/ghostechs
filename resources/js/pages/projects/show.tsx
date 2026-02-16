@@ -5,74 +5,9 @@ import { ProjectNav } from '@/components/portfolio/project-nav';
 import { StatusBadge } from '@/components/portfolio/status-badge';
 import { useInView } from '@/hooks/use-in-view';
 import PortfolioLayout from '@/layouts/portfolio-layout';
-import type {
-    AdjacentProject,
-    ProjectDetail,
-    ProjectSection,
-} from '@/types/portfolio';
-
-const MOCK_PROJECT: ProjectDetail = {
-    id: 1,
-    slug: 'shelfwiser',
-    title: 'ShelfWiser',
-    tagline:
-        'Multi-tenant inventory management platform with batch/expiry tracking, multi-location inventory, and role-based access control.',
-    description: '',
-    status: 'production',
-    external_url: 'https://shelfwiser.com',
-    github_url: 'https://github.com/somadina/shelfwiser',
-    technologies: [
-        { id: 1, name: 'Laravel', slug: 'laravel', category: 'framework' },
-        { id: 2, name: 'React', slug: 'react', category: 'framework' },
-        {
-            id: 3,
-            name: 'TypeScript',
-            slug: 'typescript',
-            category: 'language',
-        },
-        {
-            id: 4,
-            name: 'PostgreSQL',
-            slug: 'postgresql',
-            category: 'database',
-        },
-        {
-            id: 5,
-            name: 'Tailwind CSS',
-            slug: 'tailwind-css',
-            category: 'framework',
-        },
-    ],
-    sections: [
-        {
-            id: 1,
-            type: 'overview',
-            title: 'Overview',
-            sort_order: 1,
-            body_html:
-                '<p>ShelfWiser is a comprehensive multi-tenant inventory management system built for businesses that need to track products across multiple locations with batch and expiry date awareness.</p><p>The platform handles everything from purchase orders to stock transfers, with real-time inventory levels and automated low-stock alerts.</p>',
-        },
-        {
-            id: 2,
-            type: 'architecture',
-            title: 'Architecture',
-            sort_order: 2,
-            body_html:
-                '<h2>System Design</h2><p>The application follows a service-oriented architecture within a Laravel monolith, with clear boundaries between tenant contexts.</p><ul><li>Multi-tenant data isolation using database scoping</li><li>Event-driven inventory updates via Laravel queues</li><li>Real-time dashboard powered by WebSocket broadcasts</li></ul><p>Each tenant gets isolated data while sharing the same application infrastructure, keeping operational costs low.</p>',
-        },
-        {
-            id: 3,
-            type: 'lessons',
-            title: 'Lessons Learned',
-            sort_order: 3,
-            body_html:
-                '<p>Building a multi-tenant system taught several key lessons about data isolation, performance optimization, and the importance of comprehensive testing at the boundary between tenants.</p><blockquote>The hardest bugs to catch are the ones that only manifest when tenant contexts bleed into each other.</blockquote><p>We implemented strict query scoping through model traits and middleware to prevent cross-tenant data leakage.</p>',
-        },
-    ],
-};
-
-const MOCK_PREV: AdjacentProject = { slug: 'verivote', title: 'VeriVote' };
-const MOCK_NEXT: AdjacentProject = { slug: 'taxpadi', title: 'TaxPadi' };
+import { home } from '@/routes';
+import type { ProjectDetailPageProps } from '@/types/pages';
+import type { ProjectSection } from '@/types/models';
 
 function Section({
     section,
@@ -96,19 +31,17 @@ function Section({
             <h2 className="mb-6 border-b border-border pb-4 font-mono-space text-lg font-bold tracking-tight text-foreground">
                 {section.title}
             </h2>
-            <div
-                className="prose-portfolio"
-                dangerouslySetInnerHTML={{ __html: section.body_html }}
-            />
+            {section.body_html && (
+                <div
+                    className="prose-portfolio"
+                    dangerouslySetInnerHTML={{ __html: section.body_html }}
+                />
+            )}
         </div>
     );
 }
 
-export default function ProjectShow() {
-    const project = MOCK_PROJECT;
-    const prevProject = MOCK_PREV;
-    const nextProject = MOCK_NEXT;
-
+export default function ProjectShow({ project, prevProject, nextProject }: ProjectDetailPageProps) {
     const [headerVisible, setHeaderVisible] = useState(false);
 
     useEffect(() => {
@@ -121,7 +54,7 @@ export default function ProjectShow() {
             <Head title={`${project.title} — Portfolio`} />
 
             <div className="pt-12">
-                <BackLink href="/" label="Back to projects" />
+                <BackLink href={home.url()} label="Back to projects" />
             </div>
 
             <section
@@ -145,7 +78,7 @@ export default function ProjectShow() {
                 </p>
 
                 <div className="mt-6 flex flex-wrap gap-2">
-                    {project.technologies.map((tech) => (
+                    {project.technologies?.map((tech) => (
                         <span
                             key={tech.id}
                             className="rounded-sm border border-border px-[0.6rem] py-1 font-mono-ibm text-[0.65rem] tracking-[0.05em] text-muted-foreground"
@@ -183,7 +116,8 @@ export default function ProjectShow() {
 
             <section className="pb-16">
                 {project.sections
-                    .sort((a, b) => a.sort_order - b.sort_order)
+                    ?.sort((a, b) => a.sort_order - b.sort_order)
+                    .filter((s) => s.is_visible)
                     .map((section, i) => (
                         <Section
                             key={section.id}
